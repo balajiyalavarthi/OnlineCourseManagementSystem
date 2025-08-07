@@ -65,7 +65,7 @@ public class CourseDetails {
 	 * @param instructorName
 	 * @param studentsCourses
 	 */
-	public CourseDetails(long courseId, String courseName, String courseDiscription, double coursePrice,
+	public CourseDetails(int courseId, String courseName, String courseDiscription, double coursePrice,
 			String instructorName, List<String> studentsCourses) {
 		super();
 		this.courseId = courseId;
