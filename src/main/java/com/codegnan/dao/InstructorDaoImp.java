@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.codegnan.model.InstructorDetails;
 
-public class InstructorDaoIpm implements InstructorDao{
+public class InstructorDaoImp implements InstructorDao{
 
 	@Override
 	public String addInstructor(InstructorDetails instructorDetails) {
