@@ -12,9 +12,9 @@ public String addStudent(StudentsDetails studentsDetails);
 	
 	public List<StudentsDetails> getAllStudents();
 	
-	public StudentsDetails getByStudentName(String studentName);
+	public StudentsDetails getByStudentId(int studentId);
 	
 	public String updateStudent(StudentsDetails studentDetails);
 	
-	public String deleteStudentByName(String name);
+	public String deleteStudentById(int studentId);
 }
