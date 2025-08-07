@@ -8,6 +8,7 @@ public class StudentsDetails {
 	private String studentName;
 	private String studentEmail;
 	private List<String> studentsCourses;
+	
 	public int getStudentId() {
 		return studentId;
 	}
