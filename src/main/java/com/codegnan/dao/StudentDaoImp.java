@@ -79,14 +79,14 @@ public class StudentDaoImp implements StudentDao {
 
 	
 	@Override
-	public StudentsDetails getByStudentName(String studentName) {
+	public StudentsDetails getByStudentId(int studentId) {
 		String sqlQuery = "select*"
 				+ "from student_details"
-				+ "where studentName = (?)";
+				+ "where studentId = (?)";
 		
 		try(PreparedStatement ps = DbConnection.getConnection().prepareStatement(sqlQuery)){
 			
-			ps.setString(1, studentName);
+			ps.setInt(1, studentId);
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -137,14 +137,15 @@ public class StudentDaoImp implements StudentDao {
 	}
 
 	@Override
-	public String deleteStudentByName(String name) {
+	public String deleteStudentById(int studentId) {
 		
 		String result = "";
 		
 		String sqlQuery = "delete from student_details"
-				+ "where studentName = (?)";
+				+ "where studentId = (?)";
 		try(PreparedStatement ps = DbConnection.getConnection().prepareStatement(sqlQuery)){
 			
+			ps.setInt(1, studentId);
 			int rowsDeleted = ps.executeUpdate();
 			
 			if(rowsDeleted == 1) {
@@ -153,7 +154,7 @@ public class StudentDaoImp implements StudentDao {
 				result += "failure";
 			}
 		}catch(SQLException | ClassNotFoundException e) {
-			System.out.println("Student with name "+name+" not found to delete"+e.getMessage());
+			System.out.println("Student with id "+studentId+" not found to delete"+e.getMessage());
 		}
 		return result;
 	}

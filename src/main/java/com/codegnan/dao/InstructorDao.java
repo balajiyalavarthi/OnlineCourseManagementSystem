@@ -12,10 +12,10 @@ public interface InstructorDao {
 	
 	public List<InstructorDetails> getAllInstructors();
 	
-	public InstructorDetails getByInstructorName(String instructorName);
+	public InstructorDetails getByInstructorId(int instructorId);
 	
 	public String updateInstructor(InstructorDetails instructorDetails);
 	
-	public String deleteInstructorByName(String name);
+	public String deleteInstructorById(int instructorId);
 }
 
