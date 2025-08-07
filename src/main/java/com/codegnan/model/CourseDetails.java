@@ -6,16 +6,16 @@ import java.util.List;
 
 public class CourseDetails {
 
-	private long courseId;
+	private int courseId;
 	private String courseName;
 	private String courseDiscription;
 	private double coursePrice;
 	private String instructorName;
 	
-	public long getCourseId() {
+	public int getCourseId() {
 		return courseId;
 	}
-	public void setCourseId(long courseId) {
+	public void setCourseId(int courseId) {
 		this.courseId = courseId;
 	}
 	public String getCourseName() {

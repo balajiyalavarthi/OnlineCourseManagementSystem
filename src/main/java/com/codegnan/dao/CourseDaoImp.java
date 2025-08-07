@@ -106,13 +106,59 @@ public class CourseDaoImp implements CourseDao{
 	@Override
 	public String updateCourse(CourseDetails courseDetails) {
 		
-		return null;
+		String query = "update course_details set courseName=?, courseDiscription=?, coursePrice=?, instructorName=? where courseId=?";
+		
+		String result = "";
+		try(PreparedStatement ps = DbConnection.getConnection().prepareStatement(query)){
+			
+			ps.setString(1,courseDetails.getCourseName());
+			ps.setString(2, courseDetails.getCourseDiscription());
+			ps.setDouble(3,courseDetails.getCoursePrice());
+			ps.setString(4, courseDetails.getInstructorName());
+			ps.setInt(5,courseDetails.getCourseId());
+			
+			int rowsUpdated = ps.executeUpdate();
+
+			if (rowsUpdated >= 1) {
+				result += "success";
+			} else {
+				result += "failure";
+			}
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
 	public String deleteCourseByName(String name) {
 		
-		return null;
+		String result = "";
+
+		String sqlQuery = "delete from course_details" + "where courseName = (?)";
+		try (PreparedStatement ps = DbConnection.getConnection().prepareStatement(sqlQuery)) {
+
+			ps.setString(1, name);
+			int rowsDeleted = ps.executeUpdate();
+
+			if (rowsDeleted == 1) {
+				result += "success";
+			} else {
+				result += "failure";
+			}
+		} catch (SQLException | ClassNotFoundException e) {
+			System.out.println("Instructor with id " + name + " not found to delete" + e.getMessage());
+		}
+		return result;
+
+	}
+
 	}
 
 }
