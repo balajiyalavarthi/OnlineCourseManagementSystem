@@ -1,14 +1,15 @@
 package com.codegnan.model;
 
-import java.util.List;
+
 
 public class StudentsDetails {
 
 	private int studentId;
 	private String studentName;
 	private String studentEmail;
-	private List<String> studentsCourses;
+	private String studentsCourses;
 	
+
 	public int getStudentId() {
 		return studentId;
 	}
@@ -27,19 +28,20 @@ public class StudentsDetails {
 	public void setStudentEmail(String studentEmail) {
 		this.studentEmail = studentEmail;
 	}
-	public List<String> getStudentsCourses() {
+	public String getStudentsCourses() {
 		return studentsCourses;
 	}
-	public void setStudentsCourses(List<String> studentsCourses) {
+	public void setStudentsCourses(String studentsCourses) {
 		this.studentsCourses = studentsCourses;
 	}
+	
 	/**
 	 * @param studentId
 	 * @param studentName
 	 * @param studentEmail
 	 * @param studentsCourses
 	 */
-	public StudentsDetails(int studentId, String studentName, String studentEmail, List<String> studentsCourses) {
+	public StudentsDetails(int studentId, String studentName, String studentEmail, String studentsCourses) {
 		super();
 		this.studentId = studentId;
 		this.studentName = studentName;

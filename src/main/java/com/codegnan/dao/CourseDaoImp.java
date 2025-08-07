@@ -1,7 +1,9 @@
 package com.codegnan.dao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.codegnan.DbConnection.DbConnection;
@@ -45,7 +47,28 @@ public class CourseDaoImp implements CourseDao{
 	@Override
 	public List<CourseDetails> getAllCourses() {
 		
-		return null;
+		String query = "select * from course_details";
+		List<CourseDetails> courses = new ArrayList();
+;		try(PreparedStatement ps = DbConnection.getConnection().prepareStatement(query)){
+			
+			ResultSet rs =  ps.executeQuery();
+
+			if(rs.next()) {
+				CourseDetails details = new CourseDetails();
+				details.setCourseName(rs.getString("courseName"));
+				details.setCourseDiscription(rs.getString("courseDiscription"));
+				details.setCoursePrice(rs.getDouble("coursePrice"));
+				details.setInstructorName(rs.getString("instructorName"));
+				courses.add(details);
+			}
+			} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return courses;
 	}
 
 	@Override

@@ -28,17 +28,22 @@ public class StudentDaoImp implements StudentDao {
 		String sqlquery = "select* from student_details";
 		
 		try (PreparedStatement ps = DbConnection.getConnection().prepareStatement(sqlquery)){
-			ResultSet rs = ps.executeQuery();
 			
 			System.out.println("studentId/studentName/studentEmail/studentCourses");
+			ResultSet rs = ps.executeQuery();
+			
 			if(rs.next()) {
-				students.add(new StudentsDetails(rs.getInt(1), rs.getString(2), rs.getString(3), );	
+				students.add(new StudentsDetails(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));	
+			}else {
+				
 			}
 			
 		} catch (SQLException | ClassNotFoundException e){
 			e.printStackTrace();
 		}
-		return null;
+		
+		
+		return students;
 	}
 
 	@Override
