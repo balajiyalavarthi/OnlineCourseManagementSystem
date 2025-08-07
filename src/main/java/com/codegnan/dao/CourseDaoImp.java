@@ -55,6 +55,7 @@ public class CourseDaoImp implements CourseDao{
 
 			if(rs.next()) {
 				CourseDetails details = new CourseDetails();
+				details.setCourseId(rs.getInt("courseId"));
 				details.setCourseName(rs.getString("courseName"));
 				details.setCourseDiscription(rs.getString("courseDiscription"));
 				details.setCoursePrice(rs.getDouble("coursePrice"));
@@ -73,8 +74,27 @@ public class CourseDaoImp implements CourseDao{
 
 	@Override
 	public CourseDetails getByCourseName(String CourseName) {
-		
-		return null;
+		CourseDetails details = new CourseDetails();
+		String query = "select * from course_details where courseName=?";
+		try(PreparedStatement ps = DbConnection.getConnection().prepareStatement(query) ){
+			ps.setString(1, CourseName);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				details.setCourseId(rs.getInt("courseId"));
+				details.setCourseName(rs.getString("courseName"));
+				details.setCourseDiscription(rs.getString("courseDiscription"));
+				details.setCoursePrice(rs.getDouble("coursePrice"));
+				details.setInstructorName(rs.getString("instructorName"));
+			}
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return details;
 	}
 
 	@Override
