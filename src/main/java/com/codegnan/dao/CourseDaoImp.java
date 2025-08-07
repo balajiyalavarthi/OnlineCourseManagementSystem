@@ -11,6 +11,8 @@ import com.codegnan.model.CourseDetails;
 
 public class CourseDaoImp implements CourseDao{
 
+	
+	
 	@Override
 	public String addCourse(CourseDetails courseDetails) {
 		
@@ -43,6 +45,8 @@ public class CourseDaoImp implements CourseDao{
 		}
 		return output;
 	}
+	
+	
 
 	@Override
 	public List<CourseDetails> getAllCourses() {
@@ -71,6 +75,8 @@ public class CourseDaoImp implements CourseDao{
 		}
 		return courses;
 	}
+	
+	
 
 	@Override
 	public CourseDetails getByCourseName(String CourseName) {

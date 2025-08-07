@@ -8,6 +8,8 @@ public class StudentsDetails {
 	private String studentName;
 	private String studentEmail;
 	private String studentsCourses;
+	
+
 	public int getStudentId() {
 		return studentId;
 	}
@@ -32,6 +34,7 @@ public class StudentsDetails {
 	public void setStudentsCourses(String studentsCourses) {
 		this.studentsCourses = studentsCourses;
 	}
+	
 	/**
 	 * @param studentId
 	 * @param studentName
