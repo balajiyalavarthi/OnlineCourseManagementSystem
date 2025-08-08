@@ -15,4 +15,5 @@ public interface InstructorService {
 	public String update(InstructorDetails instructorDetails);
 	
 	public String deleteById(int instructorId);
+
 }

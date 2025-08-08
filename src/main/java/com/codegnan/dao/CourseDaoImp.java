@@ -52,8 +52,8 @@ public class CourseDaoImp implements CourseDao{
 	public List<CourseDetails> getAllCourses() {
 		
 		String query = "select * from course_details";
-		List<CourseDetails> courses = new ArrayList();
-;		try(PreparedStatement ps = DbConnection.getConnection().prepareStatement(query)){
+		List<CourseDetails> courses = new ArrayList<>();
+		try(PreparedStatement ps = DbConnection.getConnection().prepareStatement(query)){
 			
 			ResultSet rs =  ps.executeQuery();
 
@@ -153,7 +153,7 @@ public class CourseDaoImp implements CourseDao{
 				result += "failure";
 			}
 		} catch (SQLException | ClassNotFoundException e) {
-			System.out.println("Instructor with id " + name + " not found to delete" + e.getMessage());
+			System.out.println("course with name " + name + " not found to delete" + e.getMessage());
 		}
 		return result;
 
@@ -161,4 +161,4 @@ public class CourseDaoImp implements CourseDao{
 
 	}
 
-}
+

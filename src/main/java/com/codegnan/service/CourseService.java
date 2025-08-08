@@ -1,5 +1,6 @@
 package com.codegnan.service;
 
+
 import java.util.List;
 
 import com.codegnan.model.CourseDetails;
@@ -15,4 +16,5 @@ public interface CourseService {
 	public String update(CourseDetails courseDetails);
 	
 	public String deleteByName(String name);
+
 }

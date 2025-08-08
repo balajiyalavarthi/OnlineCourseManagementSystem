@@ -14,9 +14,9 @@ public class StudentDaoImp implements StudentDao {
 	@Override
 	public String addStudent(StudentsDetails studentsDetails) {
 		String result ="";
-		String insertQuery = "INSERT INTO student_details"
-				+ "(studentId, studentName, studentEmail, studentCourses)"
-				+ "VALUES"
+		String insertQuery = "INSERT INTO student_details "
+				+ "(studentId, studentName, studentEmail, studentsCourses )"
+				+ "VALUES "
 				+ "(?, ?, ?, ?)";
 		
 		try(PreparedStatement ps = DbConnection.getConnection().prepareStatement(insertQuery)){
@@ -80,8 +80,8 @@ public class StudentDaoImp implements StudentDao {
 	
 	@Override
 	public StudentsDetails getByStudentId(int studentId) {
-		String sqlQuery = "select*"
-				+ "from student_details"
+		String sqlQuery = "select* "
+				+ "from student_details "
 				+ "where studentId = (?)";
 		
 		try(PreparedStatement ps = DbConnection.getConnection().prepareStatement(sqlQuery)){
@@ -98,8 +98,7 @@ public class StudentDaoImp implements StudentDao {
 			
 			
 		}catch(SQLException | ClassNotFoundException e) {
-			
-			System.out.println("Student not Found"+e.getMessage());	
+			e.printStackTrace();		
 		}
 		
 		return null;
@@ -110,17 +109,16 @@ public class StudentDaoImp implements StudentDao {
 	public String updateStudent(StudentsDetails studentDetails) {
 		String result = "";
 		
-		String updateQuery = "update student_details"
-				+ "set studentId = (?), studentName = (?), studentEmail = (?), studentsCourses = (?)"
+		String updateQuery = "update student_details "
+				+ "studentName = (?), studentEmail = (?), studentsCourses = (?) "
 				+ "where studentId = (?)";
 		
 		try(PreparedStatement ps = DbConnection.getConnection().prepareStatement(updateQuery)){
 			
-			ps.setInt(1, studentDetails.getStudentId());
-			ps.setString(2, studentDetails.getStudentName());
-			ps.setString(3, studentDetails.getStudentEmail());
-			ps.setString(4, studentDetails.getStudentsCourses());
-			ps.setInt(5, studentDetails.getStudentId());
+			ps.setString(1, studentDetails.getStudentName());
+			ps.setString(2, studentDetails.getStudentEmail());
+			ps.setString(3, studentDetails.getStudentsCourses());
+			ps.setInt(4, studentDetails.getStudentId());
 			
 			int rowsUpdated = ps.executeUpdate();
 			
@@ -141,7 +139,7 @@ public class StudentDaoImp implements StudentDao {
 		
 		String result = "";
 		
-		String sqlQuery = "delete from student_details"
+		String sqlQuery = "delete from student_details "
 				+ "where studentId = (?)";
 		try(PreparedStatement ps = DbConnection.getConnection().prepareStatement(sqlQuery)){
 			
