@@ -15,8 +15,8 @@ public class InstructorDaoImp implements InstructorDao {
 	@Override
 	public String addInstructor(InstructorDetails instructorDetails) {
 		String result = "";
-		String insertQuery = "INSERT INTO instructor_details"
-				+ "(instructorId, instructorName, instructorEmail, instructorCourse)" + "VALUES" + "(?, ?, ?, ?)";
+		String insertQuery = "INSERT INTO instructor_details "
+				+ "(instructorId, instructorName, instructorEmail, instructorCourse )" + "VALUES " + "(?, ?, ?, ?)";
 
 		try (PreparedStatement ps = DbConnection.getConnection().prepareStatement(insertQuery)) {
 
@@ -68,7 +68,7 @@ public class InstructorDaoImp implements InstructorDao {
 	@Override
 	public InstructorDetails getByInstructorId(int instructorId) {
 
-		String sqlQuery = "select*" + "from instructor_details" + "where instructorId = (?)";
+		String sqlQuery = "select* " + "from instructor_details " + "where instructorId = (?)";
 
 		try (PreparedStatement ps = DbConnection.getConnection().prepareStatement(sqlQuery)) {
 
@@ -82,8 +82,7 @@ public class InstructorDaoImp implements InstructorDao {
 			}
 
 		} catch (SQLException | ClassNotFoundException e) {
-
-			System.out.println("Instructor not Found" + e.getMessage());
+			e.printStackTrace();
 		}
 
 		return null;
@@ -93,17 +92,17 @@ public class InstructorDaoImp implements InstructorDao {
 	public String updateInstructor(InstructorDetails instructorDetails) {
 		String result = "";
 
-		String updateQuery = "update instructor_details"
-				+ "set instructorId = (?), instructorName = (?), instructorEmail = (?), instructorCourse = (?)"
+		String updateQuery = "update instructor_details "
+				+ "SET instructorName = (?), instructorEmail = (?), instructorCourse = (?) "
 				+ "where instructorId = (?)";
 
 		try (PreparedStatement ps = DbConnection.getConnection().prepareStatement(updateQuery)) {
 
-			ps.setInt(1, instructorDetails.getInstructorId());
-			ps.setString(2, instructorDetails.getInstructorName());
-			ps.setString(3, instructorDetails.getInstructorEmail());
-			ps.setString(4, instructorDetails.getInstructorCourse());
-			ps.setInt(5, instructorDetails.getInstructorId());
+			
+			ps.setString(1, instructorDetails.getInstructorName());
+			ps.setString(2, instructorDetails.getInstructorEmail());
+			ps.setString(3, instructorDetails.getInstructorCourse());
+			ps.setInt(4, instructorDetails.getInstructorId());
 
 			int rowsUpdated = ps.executeUpdate();
 
@@ -123,7 +122,7 @@ public class InstructorDaoImp implements InstructorDao {
 	public String deleteInstructorById(int instructorId) {
 		String result = "";
 
-		String sqlQuery = "delete from instructor_details" + "where instructorId = (?)";
+		String sqlQuery = "delete from instructor_details " + "where instructorId = (?)";
 		try (PreparedStatement ps = DbConnection.getConnection().prepareStatement(sqlQuery)) {
 
 			ps.setInt(1, instructorId);
