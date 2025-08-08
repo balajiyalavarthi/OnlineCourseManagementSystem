@@ -16,15 +16,20 @@ public class CourseDaoImp implements CourseDao{
 	@Override
 	public String addCourse(CourseDetails courseDetails) {
 		
-		String query = "insert into course_details (?,?,?,?)";
+		String query = "insert into course_details "
+				+ "(courseId, courseName, courseDiscription, coursePrice, instructorName) "
+				+ "values"
+				+ "(?, ?, ?, ?, ?);";
 		String output ="";
 		
 		try(PreparedStatement ps = DbConnection.getConnection().prepareStatement(query)){
 			
-			ps.setString(1,courseDetails.getCourseName());
-			ps.setString(2, courseDetails.getCourseDiscription());
-			ps.setDouble(3, courseDetails.getCoursePrice());
-			ps.setString(4, courseDetails.getInstructorName());
+			
+			ps.setInt(1,courseDetails.getCourseId());
+			ps.setString(2,courseDetails.getCourseName());
+			ps.setString(3, courseDetails.getCourseDiscription());
+			ps.setDouble(4, courseDetails.getCoursePrice());
+			ps.setString(5, courseDetails.getInstructorName());
 			
 			int rowsEffected = ps.executeUpdate();
 			

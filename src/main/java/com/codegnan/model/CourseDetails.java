@@ -11,6 +11,7 @@ public class CourseDetails {
 	private String courseDiscription;
 	private double coursePrice;
 	private String instructorName;
+
 	
 	public int getCourseId() {
 		return courseId;
@@ -42,13 +43,8 @@ public class CourseDetails {
 	public void setInstructorName(String instructorName) {
 		this.instructorName = instructorName;
 	}
-	public List<String> getStudentsCourses() {
-		return studentsCourses;
-	}
-	public void setStudentsCourses(List<String> studentsCourses) {
-		this.studentsCourses = studentsCourses;
-	}
-	private List<String> studentsCourses;
+	
+	
 
 	/**
 	 * 
@@ -66,15 +62,21 @@ public class CourseDetails {
 	 * @param studentsCourses
 	 */
 	public CourseDetails(int courseId, String courseName, String courseDiscription, double coursePrice,
-			String instructorName, List<String> studentsCourses) {
+			String instructorName) {
 		super();
 		this.courseId = courseId;
 		this.courseName = courseName;
 		this.courseDiscription = courseDiscription;
 		this.coursePrice = coursePrice;
 		this.instructorName = instructorName;
-		this.studentsCourses = studentsCourses;
+		
 	}
+	@Override
+	public String toString() {
+		return "CourseDetails [courseId=" + courseId + ", courseName=" + courseName + ", courseDiscription="
+				+ courseDiscription + ", coursePrice=" + coursePrice + ", instructorName=" + instructorName + "]";
+	}
+	
 	
 	
 	
