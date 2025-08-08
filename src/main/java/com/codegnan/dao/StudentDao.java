@@ -5,10 +5,9 @@ import java.util.List;
 import com.codegnan.model.StudentsDetails;
 
 
-
 public interface StudentDao {
 	
-public String addStudent(StudentsDetails studentsDetails);
+	public String addStudent(StudentsDetails studentsDetails);
 	
 	public List<StudentsDetails> getAllStudents();
 	
