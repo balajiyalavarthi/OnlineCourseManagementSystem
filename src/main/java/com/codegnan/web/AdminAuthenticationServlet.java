@@ -28,20 +28,23 @@ public class AdminAuthenticationServlet extends HttpServlet {
 		String adminEmail = request.getParameter("AdminEmail");
 		String adminPassword = request.getParameter("AdminPassword");
 
-		String sqlQuery = "select* from courseAuthentication " + "where adminEmail = ?;";
+		String sqlQuery = "select* from adminAuthentication " + "where adminEmail = ?";
 
 try (PreparedStatement ps = DbConnection.getConnection().prepareStatement(sqlQuery)) {
 			
 			ps.setString(1, adminEmail);
+			
 			try (ResultSet rs = ps.executeQuery()) {
 				
 				if (rs.next()) {
 					String originalPassword = rs.getString("adminPassword");
 
 					if (adminPassword.equals(originalPassword)) {
+						
 						HttpSession session = request.getSession();
 						session.setAttribute("adminEmail", adminEmail);
 						response.sendRedirect("admin_dashboard.jsp");
+						
 					} else {
 						request.setAttribute("error", "Invalid admin credentials.");
 						RequestDispatcher dispatcher = request.getRequestDispatcher("admin_login.jsp");
