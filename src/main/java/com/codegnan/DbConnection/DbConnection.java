@@ -8,7 +8,7 @@ public class DbConnection {
 
 	private static final String jdbc_url= "jdbc:mysql://localhost:3306/coursemanagement";
 	private static final String userName= "root";
-	private static final String password= "Balaji*1915111907";
+	private static final String password= "root";
 	
 	public static Connection getConnection() throws SQLException, ClassNotFoundException{
 		
