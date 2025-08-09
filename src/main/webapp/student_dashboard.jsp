@@ -1,20 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="jakarta.servlet.http.HttpSession" %>
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page session="true" %>
+<%
+    String role = (String) session.getAttribute("role");
+    if (role == null || !"STUDENT".equals(role)) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
 <html>
 <head>
     <title>Student Dashboard</title>
 </head>
 <body>
-    <%
-        HttpSession sess = request.getSession(false);
-        if (session == null || session.getAttribute("studentEmail") == null) {
-            response.sendRedirect("student_login.jsp");
-            return;
-        }
-    %>
-    <h2>Welcome, Student: <%= session.getAttribute("studentEmail") %></h2>
-    <p>View available courses and track your progress.</p>
+    <h2>Welcome, Student!</h2>
+    <p>Email: <%= session.getAttribute("userEmail") %></p>
+
+    <ul>
+        <li><a href="#">View My Courses</a></li>
+        <li><a href="#">View Assignments</a></li>
+        <li><a href="#">Submit Assignment</a></li>
+    </ul>
 
     <a href="logout.jsp">Logout</a>
 </body>

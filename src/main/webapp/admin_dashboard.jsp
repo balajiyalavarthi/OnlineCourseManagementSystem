@@ -1,21 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="jakarta.servlet.http.HttpSession" %>
-
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page session="true" %>
+<%
+    String role = (String) session.getAttribute("role");
+    if (role == null || !"ADMIN".equals(role)) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
 <html>
 <head>
     <title>Admin Dashboard</title>
 </head>
 <body>
-    <%
-    jakarta.servlet.http.HttpSession sess = request.getSession(false);
-        if (sess == null || sess.getAttribute("adminEmail") == null) {
-            response.sendRedirect("admin_login.jsp");
-            return;
-        }
-    %>
-    <h2>Welcome, Admin: <%= session.getAttribute("adminEmail") %></h2>
-    <p>Manage courses, instructors, and students here.</p>
+    <h2>Welcome, Admin!</h2>
+    <p>Email: <%= session.getAttribute("userEmail") %></p>
+
+    <ul>
+        <li><a href="#">Manage Courses</a></li>
+        <li><a href="#">Manage Instructors</a></li>
+        <li><a href="#">Manage Students</a></li>
+    </ul>
 
     <a href="logout.jsp">Logout</a>
 </body>
