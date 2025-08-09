@@ -1,17 +1,16 @@
 package com.codegnan.model;
 
-import java.util.List;
+import java.sql.Date;
 
-
-
-public class CourseDetails {
-
+public class Course {
 	private int courseId;
 	private String courseName;
 	private String courseDiscription;
 	private double coursePrice;
-	private String instructorName;
-
+	private String instructorName; // Fk
+	private Date startDate;
+	private Date endDate;
+	
 	
 	public int getCourseId() {
 		return courseId;
@@ -43,42 +42,39 @@ public class CourseDetails {
 	public void setInstructorName(String instructorName) {
 		this.instructorName = instructorName;
 	}
-	
-	
-
-	/**
-	 * 
-	 */
-	public CourseDetails() {
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	public Course() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	/**
-	 * @param courseId
-	 * @param courseName
-	 * @param courseDiscription
-	 * @param coursePrice
-	 * @param instructorName
-	 * @param studentsCourses
-	 */
-	public CourseDetails(int courseId, String courseName, String courseDiscription, double coursePrice,
-			String instructorName) {
+	public Course(int courseId, String courseName, String courseDiscription, double coursePrice, String instructorName,
+			Date startDate, Date endDate) {
 		super();
 		this.courseId = courseId;
 		this.courseName = courseName;
 		this.courseDiscription = courseDiscription;
 		this.coursePrice = coursePrice;
 		this.instructorName = instructorName;
-		
+		this.startDate = startDate;
+		this.endDate = endDate;
 	}
 	@Override
 	public String toString() {
-		return "CourseDetails [courseId=" + courseId + ", courseName=" + courseName + ", courseDiscription="
-				+ courseDiscription + ", coursePrice=" + coursePrice + ", instructorName=" + instructorName + "]";
+		return "Course [courseId=" + courseId + ", courseName=" + courseName + ", courseDiscription="
+				+ courseDiscription + ", coursePrice=" + coursePrice + ", instructorName=" + instructorName
+				+ ", startDate=" + startDate + ", endDate=" + endDate + "]";
 	}
-	
-	
-	
 	
 	
 }
