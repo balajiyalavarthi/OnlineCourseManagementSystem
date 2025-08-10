@@ -39,65 +39,63 @@ public class CourseDaoImp implements CourseDao{
 
 	@Override
 	public List<Course> getAllCourses() throws ClassNotFoundException {
-		
-		String sql = "SELECT * FROM course";
-        List<Course> courses = new ArrayList<>();
+		    List<Course> courses = new ArrayList<>();
+		    String sql = "SELECT c.course_id, c.title as courseName, c.description as courseDiscription, " +
+		                 "i.name as instructorName, c.start_date, c.end_date " +
+		                 "FROM course c JOIN instructor i ON c.instructor_id = i.instructor_id";
+		    
+		    try (Connection connection = DbConnection.getConnection();
+		         PreparedStatement ps = connection.prepareStatement(sql);
+		         ResultSet rs = ps.executeQuery()) {
+		        
+		        while (rs.next()) {
+		            Course course = new Course();
+		            course.setCourseId(rs.getInt("course_id"));
+		            course.setCourseName(rs.getString("courseName"));
+		            course.setCourseDiscription(rs.getString("courseDiscription"));
+		            course.setInstructorName(rs.getString("instructorName"));
+		            course.setStartDate(rs.getDate("start_date"));
+		            course.setEndDate(rs.getDate("end_date"));
+		            courses.add(course);
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    return courses;
+		}
 
-        try (PreparedStatement ps =DbConnection.getConnection().prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
 
-            while (rs.next()) {
-            	
-                Course c = new Course();
-                
-                c.setCourseId(rs.getInt("course_id"));
-                c.setCourseName(rs.getString("course_name"));
-                c.setCourseDiscription(rs.getString("course_discription"));
-                c.setCoursePrice(rs.getDouble("course_price"));
-                c.setInstructorName(rs.getString("instructor_name"));
-                c.setStartDate(rs.getDate("start_date"));
-                c.setEndDate(rs.getDate("end_date"));
-                
-                courses.add(c);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return courses;
-	}
-
-	
 	@Override
-	public Course getByCourseName(String courseName) throws ClassNotFoundException {
-		
-		 String sql = "SELECT * FROM course WHERE course_name = ?";
-	        try (Connection conn = DbConnection.getConnection();
-	             PreparedStatement ps = conn.prepareStatement(sql)) {
+	public Course getByCourseId(int courseId) throws ClassNotFoundException {
+	    String sql = "SELECT c.course_id, c.title as courseName, c.description as courseDiscription, "
+	               + "i.name as instructorName, c.start_date, c.end_date "
+	               + "FROM course c JOIN instructor i ON c.instructor_id = i.instructor_id "
+	               + "WHERE c.course_id = ?";
+	    
+	    try (Connection conn = DbConnection.getConnection();
+	         PreparedStatement ps = conn.prepareStatement(sql)) {
 
-	            ps.setString(1, courseName);
-	            try (ResultSet rs = ps.executeQuery()) {
-	                if (rs.next()) {
-	                    Course c = new Course();
-	                    
-	                    c.setCourseId(rs.getInt("course_id"));
-	                    c.setCourseName(rs.getString("course_name"));
-	                    c.setCourseDiscription(rs.getString("course_discription"));
-	                    c.setCoursePrice(rs.getDouble("course_price"));
-	                    c.setInstructorName(rs.getString("instructor_name"));
-	                    c.setStartDate(rs.getDate("start_date"));
-	                    c.setEndDate(rs.getDate("end_date"));
-	                    
-	                    return c;
-	                }
+	        ps.setInt(1, courseId);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next()) {
+	                Course c = new Course();
+	                
+	                c.setCourseId(rs.getInt("course_id"));
+	                c.setCourseName(rs.getString("courseName"));
+	                c.setCourseDiscription(rs.getString("courseDiscription"));
+	                c.setInstructorName(rs.getString("instructorName"));
+	                c.setStartDate(rs.getDate("start_date"));
+	                c.setEndDate(rs.getDate("end_date"));
+	                
+	                return c;
 	            }
-
-	        } catch (SQLException e) {
-	            e.printStackTrace();
 	        }
-	        return null;
-	}
 
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return null;
+	}
 	
 	
 	
@@ -144,6 +142,31 @@ public class CourseDaoImp implements CourseDao{
             e.printStackTrace();
             return "Database error: " + e.getMessage();
         }
+	}
+	
+	public List<Course> findCoursesByInstructor(int instructorId) throws ClassNotFoundException {
+	    List<Course> courses = new ArrayList<>();
+	    String sql = "SELECT * FROM course WHERE instructor_id = ?";
+	    
+	    try (Connection conn = DbConnection.getConnection();
+	         PreparedStatement ps = conn.prepareStatement(sql)) {
+	        
+	        ps.setInt(1, instructorId);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            while (rs.next()) {
+	                Course course = new Course();
+	                course.setCourseId(rs.getInt("course_id"));
+	                course.setCourseName(rs.getString("title"));
+	                course.setCourseDiscription(rs.getString("description"));
+	                course.setStartDate(rs.getDate("start_date"));
+	                course.setEndDate(rs.getDate("end_date"));
+	                courses.add(course);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return courses;
 	}
 	
 

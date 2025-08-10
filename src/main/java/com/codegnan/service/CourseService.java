@@ -10,7 +10,7 @@ public interface CourseService {
 	
 	public List<Course> findAll() throws ClassNotFoundException;
 	
-	public Course findById(String courseName) throws ClassNotFoundException;
+	public Course findById(int courseId) throws ClassNotFoundException;
 	
 	public String update(Course course) throws ClassNotFoundException;
 	

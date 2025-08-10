@@ -19,9 +19,8 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         // Queries for each role
-        String adminSQL = "SELECT password FROM admin WHERE email = ?";
-        String instructorSQL = "SELECT password FROM instructor WHERE email = ?";
-        // Modified: select student_id along with password for student
+        String adminSQL = "SELECT admin_id, password FROM admin WHERE email = ?";
+        String instructorSQL = "SELECT instructor_id, password FROM instructor WHERE email = ?";
         String studentSQL = "SELECT student_id, password FROM student WHERE email = ?";
 
         try (Connection conn = DbConnection.getConnection()) {
@@ -31,7 +30,11 @@ public class LoginServlet extends HttpServlet {
                 ps.setString(1, email);
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next() && password.equals(rs.getString("password"))) {
-                        setSessionAndRedirect(request, response, email, "ADMIN", "admin_dashboard.jsp", null);
+                        HttpSession session = request.getSession();
+                        session.setAttribute("userEmail", email);
+                        session.setAttribute("role", "ADMIN");
+                        session.setAttribute("adminId", rs.getInt("admin_id"));
+                        response.sendRedirect("admin_dashboard.jsp");
                         return;
                     }
                 }
@@ -42,19 +45,28 @@ public class LoginServlet extends HttpServlet {
                 ps.setString(1, email);
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next() && password.equals(rs.getString("password"))) {
-                        setSessionAndRedirect(request, response, email, "INSTRUCTOR", "instructor_dashboard.jsp", null);
+                        HttpSession session = request.getSession();
+                        session.setAttribute("userEmail", email);
+                        session.setAttribute("role", "INSTRUCTOR");
+                        session.setAttribute("instructorId", rs.getInt("instructor_id"));
+                        response.sendRedirect("instructor_dashboard.jsp");
                         return;
                     }
                 }
             }
 
-            // Check Student
+            // Check Student - THIS IS THE CRITICAL SECTION WE MODIFIED
             try (PreparedStatement ps = conn.prepareStatement(studentSQL)) {
                 ps.setString(1, email);
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next() && password.equals(rs.getString("password"))) {
-                        int studentId = rs.getInt("student_id");
-                        setSessionAndRedirect(request, response, email, "STUDENT", "student_dashboard.jsp", studentId);
+                        HttpSession session = request.getSession();
+                        session.setAttribute("userEmail", email);
+                        session.setAttribute("role", "STUDENT");
+                        // Set BOTH userId and studentId for backward compatibility
+                        session.setAttribute("userId", rs.getInt("student_id"));
+                        session.setAttribute("studentId", rs.getInt("student_id"));
+                        response.sendRedirect("student_dashboard.jsp");
                         return;
                     }
                 }
@@ -69,18 +81,5 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("error", "Internal server error. Please try again.");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
-    }
-
-    // Helper method to set session and redirect, now with optional userId
-    private void setSessionAndRedirect(HttpServletRequest request, HttpServletResponse response,
-                                       String email, String role, String dashboard, Integer userId)
-            throws IOException {
-        HttpSession session = request.getSession();
-        session.setAttribute("userEmail", email);
-        session.setAttribute("role", role);
-        if (userId != null) {
-            session.setAttribute("userId", userId);
-        }
-        response.sendRedirect(dashboard);
     }
 }

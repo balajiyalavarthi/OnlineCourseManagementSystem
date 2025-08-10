@@ -114,4 +114,22 @@ public class EnrollmentDaoImp implements EnrollmentDao {
             return "Error: " + e.getMessage();
         }
     }
+    
+    public boolean isAlreadyEnrolled(int studentId, int courseId) throws ClassNotFoundException {
+        String sql = "SELECT COUNT(*) FROM enrollment WHERE student_id = ? AND course_id = ?";
+        try (Connection con = DbConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            ps.setInt(1, studentId);
+            ps.setInt(2, courseId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

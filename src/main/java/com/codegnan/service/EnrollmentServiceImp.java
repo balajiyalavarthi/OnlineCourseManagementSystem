@@ -11,8 +11,13 @@ public class EnrollmentServiceImp implements EnrollmentService{
 
 	@Override
 	public String save(Enrollment enrollment) throws ClassNotFoundException {
-		// TODO Auto-generated method stub
-		return enrollmentImp.addEnrollment(enrollment);
+	    // Check if already enrolled
+	    if (enrollmentImp.isAlreadyEnrolled(enrollment.getStudentId(), enrollment.getCourseId())) {
+	        return "You are already enrolled in this course";
+	    }
+	    
+	    // Proceed with enrollment
+	    return enrollmentImp.addEnrollment(enrollment);
 	}
 
 	@Override

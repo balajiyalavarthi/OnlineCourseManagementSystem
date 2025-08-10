@@ -22,9 +22,9 @@ public class CourseServiceImp implements CourseService{
 	}
 
 	@Override
-	public Course findById(String courseName) throws ClassNotFoundException {
+	public Course findById(int courseId) throws ClassNotFoundException {
 		// TODO Auto-generated method stub
-		return courseImp.getByCourseName(courseName);
+		return courseImp.getByCourseId(courseId);
 	}
 
 	@Override
@@ -39,5 +39,8 @@ public class CourseServiceImp implements CourseService{
 		return courseImp.deleteByCourseName(courseName);
 	}
 
+	public List<Course> findCoursesByInstructor(int instructorId) throws ClassNotFoundException {
+	    return courseImp.findCoursesByInstructor(instructorId);
+	}
 	
 }

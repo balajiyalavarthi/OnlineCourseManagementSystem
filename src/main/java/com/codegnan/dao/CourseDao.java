@@ -10,7 +10,7 @@ public interface CourseDao {
 	
 	public List<Course> getAllCourses() throws ClassNotFoundException;
 	
-	public Course getByCourseName(String courseName) throws ClassNotFoundException;
+	public Course getByCourseId(int courseId) throws ClassNotFoundException;
 	
 	public String updateByCourseName(Course course) throws ClassNotFoundException;
 	
