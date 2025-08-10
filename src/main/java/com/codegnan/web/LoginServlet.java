@@ -21,7 +21,8 @@ public class LoginServlet extends HttpServlet {
         // Queries for each role
         String adminSQL = "SELECT password FROM admin WHERE email = ?";
         String instructorSQL = "SELECT password FROM instructor WHERE email = ?";
-        String studentSQL = "SELECT password FROM student WHERE email = ?";
+        // Modified: select student_id along with password for student
+        String studentSQL = "SELECT student_id, password FROM student WHERE email = ?";
 
         try (Connection conn = DbConnection.getConnection()) {
 
@@ -30,7 +31,7 @@ public class LoginServlet extends HttpServlet {
                 ps.setString(1, email);
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next() && password.equals(rs.getString("password"))) {
-                        setSessionAndRedirect(request, response, email, "ADMIN", "admin_dashboard.jsp");
+                        setSessionAndRedirect(request, response, email, "ADMIN", "admin_dashboard.jsp", null);
                         return;
                     }
                 }
@@ -41,7 +42,7 @@ public class LoginServlet extends HttpServlet {
                 ps.setString(1, email);
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next() && password.equals(rs.getString("password"))) {
-                        setSessionAndRedirect(request, response, email, "INSTRUCTOR", "instructor_dashboard.jsp");
+                        setSessionAndRedirect(request, response, email, "INSTRUCTOR", "instructor_dashboard.jsp", null);
                         return;
                     }
                 }
@@ -52,7 +53,8 @@ public class LoginServlet extends HttpServlet {
                 ps.setString(1, email);
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next() && password.equals(rs.getString("password"))) {
-                        setSessionAndRedirect(request, response, email, "STUDENT", "student_dashboard.jsp");
+                        int studentId = rs.getInt("student_id");
+                        setSessionAndRedirect(request, response, email, "STUDENT", "student_dashboard.jsp", studentId);
                         return;
                     }
                 }
@@ -69,13 +71,16 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    // Helper method to set session and redirect
+    // Helper method to set session and redirect, now with optional userId
     private void setSessionAndRedirect(HttpServletRequest request, HttpServletResponse response,
-                                        String email, String role, String dashboard)
+                                       String email, String role, String dashboard, Integer userId)
             throws IOException {
         HttpSession session = request.getSession();
         session.setAttribute("userEmail", email);
         session.setAttribute("role", role);
+        if (userId != null) {
+            session.setAttribute("userId", userId);
+        }
         response.sendRedirect(dashboard);
     }
 }

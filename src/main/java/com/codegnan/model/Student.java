@@ -9,6 +9,7 @@ public class Student {
 	private String email;
 	private String password;
 	private Date enrollmentDate;
+	
 	public int getStudentId() {
 		return studentId;
 	}
