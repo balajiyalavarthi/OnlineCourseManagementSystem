@@ -13,6 +13,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Delete Student</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <h2>Delete Student</h2>

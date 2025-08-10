@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
-<head><title>Course Search Result</title></head>
+<head><title>Course Search Result</title>
+<link rel="stylesheet" href="css/style.css"></head>
 <body>
 <h2>Course Search Result</h2>
 <c:if test="${course != null}">

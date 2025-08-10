@@ -23,7 +23,7 @@ public class AddStudentServlet extends HttpServlet {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String enrollmentDate = request.getParameter("enrollmentDate");
+//        String enrollmentDate = request.getParameter("enrollmentDate");
         
         Student student = new Student();
         student.setName(name);

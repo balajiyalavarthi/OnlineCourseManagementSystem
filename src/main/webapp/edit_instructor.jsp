@@ -21,6 +21,7 @@
         .alert { padding: 10px; margin: 10px 0; border-radius: 4px; }
         .alert-danger { background-color: #f2dede; color: #a94442; }
     </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <h2>Update Your Profile</h2>

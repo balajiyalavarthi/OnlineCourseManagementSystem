@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Add New Course</title>
+    
     <style>
         .form-group { margin-bottom: 15px; }
         label { display: inline-block; width: 150px; }
@@ -18,6 +19,7 @@
         }
         .btn { padding: 5px 15px; }
     </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <h2>Add New Course</h2>

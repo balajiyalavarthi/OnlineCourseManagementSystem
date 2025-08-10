@@ -12,6 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Student</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <h2>Edit Student</h2>

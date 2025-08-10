@@ -19,6 +19,7 @@
         .btn { padding: 5px 10px; text-decoration: none; }
         .btn-primary { background-color: #337ab7; color: white; }
     </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <h2>My Courses</h2>

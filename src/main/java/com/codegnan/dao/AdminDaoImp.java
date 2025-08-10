@@ -11,12 +11,9 @@ public class AdminDaoImp implements AdminDao {
 
     @Override
     public String addAdmin(Admin admin) throws ClassNotFoundException {
-    	
         String result = "failure";
         
-  
         try (Connection con = DbConnection.getConnection()) {
-        	
             String query = "INSERT INTO admin (name, email, password) VALUES (?, ?, ?)";
             
             PreparedStatement ps = con.prepareStatement(query);
@@ -27,15 +24,17 @@ public class AdminDaoImp implements AdminDao {
             if (rows > 0) {
                 result = "success";
             }
+        } catch (SQLIntegrityConstraintViolationException e) {
+            return "Error: Email already exists";
         } catch (SQLException e) {
             e.printStackTrace();
+            return "Database error: " + e.getMessage();
         }
         return result;
     }
 
     @Override
     public List<Admin> getAllAdmin() throws ClassNotFoundException {
-    	
         List<Admin> list = new ArrayList<>();
         try (Connection con = DbConnection.getConnection()) {
             String query = "SELECT * FROM admin";
@@ -43,7 +42,7 @@ public class AdminDaoImp implements AdminDao {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Admin admin = new Admin();
-                admin.setAdminId(rs.getInt("id"));
+                admin.setAdminId(rs.getInt("admin_id")); // Fixed column name
                 admin.setName(rs.getString("name"));
                 admin.setEmail(rs.getString("email"));
                 admin.setPassword(rs.getString("password"));
@@ -60,13 +59,13 @@ public class AdminDaoImp implements AdminDao {
         Admin admin = null;
         
         try (Connection con = DbConnection.getConnection()) {
-            String query = "SELECT * FROM admin WHERE id=?";
+            String query = "SELECT * FROM admin WHERE admin_id=?"; // Fixed column name
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 admin = new Admin();
-                admin.setAdminId(rs.getInt("id"));
+                admin.setAdminId(rs.getInt("admin_id")); // Fixed column name
                 admin.setName(rs.getString("name"));
                 admin.setEmail(rs.getString("email"));
                 admin.setPassword(rs.getString("password"));
@@ -82,7 +81,7 @@ public class AdminDaoImp implements AdminDao {
         String result = "failure";
         
         try (Connection con = DbConnection.getConnection()) {
-            String query = "UPDATE admin SET name=?, email=?, password=? WHERE id=?";
+            String query = "UPDATE admin SET name=?, email=?, password=? WHERE admin_id=?"; // Fixed column name
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, admin.getName());
             ps.setString(2, admin.getEmail());
@@ -92,8 +91,11 @@ public class AdminDaoImp implements AdminDao {
             if (rows > 0) {
                 result = "success";
             }
+        } catch (SQLIntegrityConstraintViolationException e) {
+            return "Error: Email already exists";
         } catch (SQLException e) {
             e.printStackTrace();
+            return "Database error: " + e.getMessage();
         }
         return result;
     }
@@ -102,7 +104,7 @@ public class AdminDaoImp implements AdminDao {
     public String deleteByAdminId(int id) throws ClassNotFoundException {
         String result = "failure";
         try (Connection con = DbConnection.getConnection()) {
-            String query = "DELETE FROM admin WHERE id=?";
+            String query = "DELETE FROM admin WHERE admin_id=?"; // Fixed column name
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, id);
             int rows = ps.executeUpdate();
@@ -111,6 +113,7 @@ public class AdminDaoImp implements AdminDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return "Database error: " + e.getMessage();
         }
         return result;
     }

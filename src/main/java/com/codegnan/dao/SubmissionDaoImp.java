@@ -1,6 +1,7 @@
 package com.codegnan.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -117,4 +118,34 @@ public class SubmissionDaoImp implements SubmissionDao {
             return "Error: " + e.getMessage();
         }
     }
+    
+    public List<Submission> findByStudentId(int studentId) throws ClassNotFoundException {
+        List<Submission> submissions = new ArrayList<>();
+        String sql = "SELECT s.submission_id, s.assignment_id, s.student_id, s.file_path, s.submitted_on, a.title " +
+                     "FROM submission s " +
+                     "JOIN assignment a ON s.assignment_id = a.assignment_id " +
+                     "WHERE s.student_id = ? " +
+                     "ORDER BY s.submitted_on DESC";
+
+        try (Connection con = DbConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, studentId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Submission submission = new Submission();
+                    submission.setSubmissionId(rs.getInt("submission_id"));
+                    submission.setAssignmentId(rs.getInt("assignment_id"));
+                    submission.setStudentId(rs.getInt("student_id"));
+                    submission.setFilePath(rs.getString("file_path"));
+                    submission.setSubmittedOn(rs.getDate("submitted_on"));
+                    submissions.add(submission);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return submissions;
+    }
+
+
 }

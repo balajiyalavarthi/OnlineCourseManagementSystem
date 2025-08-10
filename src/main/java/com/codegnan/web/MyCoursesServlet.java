@@ -18,7 +18,13 @@ import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/myCourses")
 public class MyCoursesServlet extends HttpServlet {
-    private EnrollmentServiceImp enrollmentService = new EnrollmentServiceImp();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	private EnrollmentServiceImp enrollmentService = new EnrollmentServiceImp();
     private CourseServiceImp courseService = new CourseServiceImp();
 
     @Override

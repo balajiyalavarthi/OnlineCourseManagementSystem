@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Search Student</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <h2>Search Student</h2>
