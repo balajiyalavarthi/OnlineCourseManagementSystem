@@ -200,7 +200,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact
 
 For any queries or support, please reach out:
-- **Email**: [your-email@example.com]
+- **Email**: yalavarthibalaji105@gmail.com
 - **Project Link**: [https://github.com/yourusername/course-management-system]
 
 ---
