@@ -19,9 +19,47 @@ if (adminId == null) {
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<p style="position:absolute; top:15px; right:20px; margin:0;">
+    <a class="logout" href="logout.jsp" 
+       style="display:inline-block; padding:10px 18px; background:linear-gradient(135deg, #667eea, #764ba2); 
+              color:white; font-weight:bold; text-decoration:none; border-radius:8px; 
+              box-shadow:0 4px 10px rgba(0,0,0,0.15); transition:all 0.3s ease; 
+              font-family:'Segoe UI', sans-serif; letter-spacing:0.5px;">
+        Logout
+    </a>
+</p>
+
+<script>
+    // Add hover effect dynamically (since inline can't handle pseudo-classes)
+    document.querySelector('.logout').addEventListener('mouseover', function() {
+        this.style.transform = 'scale(1.05)';
+        this.style.boxShadow = '0 6px 14px rgba(0,0,0,0.2)';
+    });
+    document.querySelector('.logout').addEventListener('mouseout', function() {
+        this.style.transform = 'scale(1)';
+        this.style.boxShadow = '0 4px 10px rgba(0,0,0,0.15)';
+    });
+</script>
+
 <div class="dashboard">
     <h2>Welcome, Admin!</h2>
-    <p>Email: <%= session.getAttribute("userEmail") %></p>
+    <p style="display:inline-block; padding:10px 20px; 
+          background:rgba(0, 123, 255, 0.25); 
+          color:rgba(255,255,255,0.85); 
+          font-weight:bold; 
+          border-radius:12px; 
+          backdrop-filter:blur(8px); 
+          -webkit-backdrop-filter:blur(8px); 
+          box-shadow:0 4px 20px rgba(0,0,0,0.15); 
+          border:1px solid rgba(255,255,255,0.3);
+          font-family:'Segoe UI', sans-serif;
+          letter-spacing:0.5px;
+          text-shadow:0 1px 2px rgba(0,0,0,0.3);">
+    <span style="color:rgba(255,255,255,0.85); text-shadow:0 1px 2px rgba(0,0,0,0.3);">
+        <%= session.getAttribute("userEmail") %>
+    </span>
+</p>
+    
 
     <c:if test="${not empty successMessage}">
         <div class="alert alert-success">${successMessage}</div>
@@ -61,7 +99,7 @@ if (adminId == null) {
         <div class="card"><a href="admin_instructor_search.jsp">Find Instructor by ID</a></div>
     </div>
 
-    <p><a class="logout" href="logout.jsp">Logout</a></p>
+    
 </div>
 </body>
 </html>

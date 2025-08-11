@@ -75,6 +75,25 @@
         %>
     </table>
 
-    <p><a href="studentDashboard">Back to Dashboard</a></p>
+    <p style="display:inline-block; padding:10px 20px; 
+          background:rgba(0, 123, 255, 0.25); 
+          border-radius:12px; 
+          backdrop-filter:blur(8px); 
+          -webkit-backdrop-filter:blur(8px); 
+          box-shadow:0 4px 20px rgba(0,0,0,0.15); 
+          border:1px solid rgba(255,255,255,0.3);
+          font-family:'Segoe UI', sans-serif;
+          letter-spacing:0.5px;
+          margin:0;">
+  <a href="studentDashboard" 
+     style="color:rgba(255,255,255,0.85); 
+            font-weight:bold; 
+            text-decoration:none; 
+            text-shadow:0 1px 2px rgba(0,0,0,0.3);
+            transition: color 0.3s ease;">
+    Back to Dashboard
+  </a>
+</p>
+    
 </body>
 </html>
