@@ -6,12 +6,16 @@ public class Course {
 	private int courseId;
 	private String courseName;
 	private String courseDiscription;
-	private double coursePrice;
-	private String instructorName; // Fk
+	private int instructorId;
 	private Date startDate;
 	private Date endDate;
 	
-	
+	public int getInstructorId() {
+	    return instructorId;
+	}
+	public void setInstructorId(int instructorId) {
+	    this.instructorId = instructorId;
+	}
 	public int getCourseId() {
 		return courseId;
 	}
@@ -30,18 +34,7 @@ public class Course {
 	public void setCourseDiscription(String courseDiscription) {
 		this.courseDiscription = courseDiscription;
 	}
-	public double getCoursePrice() {
-		return coursePrice;
-	}
-	public void setCoursePrice(double coursePrice) {
-		this.coursePrice = coursePrice;
-	}
-	public String getInstructorName() {
-		return instructorName;
-	}
-	public void setInstructorName(String instructorName) {
-		this.instructorName = instructorName;
-	}
+	
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -58,22 +51,21 @@ public class Course {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Course(int courseId, String courseName, String courseDiscription, double coursePrice, String instructorName,
-			Date startDate, Date endDate) {
+	public Course(int courseId, String courseName, String courseDiscription, int instructorId, Date startDate,
+			Date endDate) {
 		super();
 		this.courseId = courseId;
 		this.courseName = courseName;
 		this.courseDiscription = courseDiscription;
-		this.coursePrice = coursePrice;
-		this.instructorName = instructorName;
+		this.instructorId = instructorId;
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
 	@Override
 	public String toString() {
 		return "Course [courseId=" + courseId + ", courseName=" + courseName + ", courseDiscription="
-				+ courseDiscription + ", coursePrice=" + coursePrice + ", instructorName=" + instructorName
-				+ ", startDate=" + startDate + ", endDate=" + endDate + "]";
+				+ courseDiscription + ", instructorId=" + instructorId + ", startDate=" + startDate + ", endDate="
+				+ endDate + "]";
 	}
 	
 	

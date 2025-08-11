@@ -1,107 +1,61 @@
-<!-- admin_add_course_enhanced.jsp -->
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page session="true" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.codegnan.dao.InstructorDaoImp" %>
+<%@ page import="com.codegnan.model.Instructor" %>
 
+<%
+    // Fetch instructor list for dropdown
+    List<Instructor> instructors = null;
+    try {
+        InstructorDaoImp instructorDao = new InstructorDaoImp();
+        instructors = instructorDao.getAllInstructors();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+%>
+
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Add New Course</title>
+    <meta charset="UTF-8">
+    <title>Add Course</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+<div class="form-container">
     <h2>Add New Course</h2>
-    
-    <form action="adminAddCourseEnhanced" method="post">
-        <table>
-            <tr>
-                <td>Course Name:</td>
-                <td><input type="text" name="courseName" required /></td>
-            </tr>
-            <tr>
-                <td>Description:</td>
-                <td><textarea name="courseDescription" rows="4" cols="50" required></textarea></td>
-            </tr>
-            <tr>
-                <td>Instructor:</td>
-                <td>
-                    <select name="instructorId" required>
-                        <option value="">Select Instructor</option>
-                        <c:forEach var="instructor" items="${instructors}">
-                            <option value="${instructor.instructor_id}">${instructor.name} (${instructor.email})</option>
-                        </c:forEach>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>Start Date:</td>
-                <td><input type="date" name="startDate" required /></td>
-            </tr>
-            <tr>
-                <td>End Date:</td>
-                <td><input type="date" name="endDate" required /></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="submit" value="Add Course" />
-                    <a href="admin_dashboard.jsp">Cancel</a>
-                </td>
-            </tr>
-        </table>
-    </form>
-</body>
-</html>
 
-<!-- admin_edit_course_enhanced.jsp -->
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page session="true" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <form action="AdminAddCourseServlet" method="post">
+        <label for="title">Course Title:</label>
+        <input type="text" id="title" name="title" required>
 
-<html>
-<head>
-    <title>Edit Course</title>
-</head>
-<body>
-    <h2>Edit Course</h2>
-    
-    <form action="adminEditCourseEnhanced" method="post">
-        <input type="hidden" name="courseId" value="${course.courseId}" />
-        <table>
-            <tr>
-                <td>Course Name:</td>
-                <td><input type="text" name="courseName" value="${course.courseName}" required /></td>
-            </tr>
-            <tr>
-                <td>Description:</td>
-                <td><textarea name="courseDescription" rows="4" cols="50" required>${course.courseDiscription}</textarea></td>
-            </tr>
-            <tr>
-                <td>Instructor:</td>
-                <td>
-                    <select name="instructorId" required>
-                        <c:forEach var="instructor" items="${instructors}">
-                            <option value="${instructor.instructor_id}" 
-                                    ${instructor.name == course.instructorName ? 'selected' : ''}>
-                                ${instructor.name} (${instructor.email})
-                            </option>
-                        </c:forEach>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>Start Date:</td>
-                <td><input type="date" name="startDate" value="${course.startDate}" required /></td>
-            </tr>
-            <tr>
-                <td>End Date:</td>
-                <td><input type="date" name="endDate" value="${course.endDate}" required /></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="submit" value="Update Course" />
-                    <a href="admin_dashboard.jsp">Cancel</a>
-                </td>
-            </tr>
-        </table>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="3"></textarea>
+
+        <label for="instructor_id">Instructor:</label>
+        <select id="instructor_id" name="instructor_id" required>
+            <option value="">-- Select Instructor --</option>
+            <% if (instructors != null) {
+                for (Instructor i : instructors) { %>
+                    <option value="<%= i.getInstructor_id() %>"><%= i.getName() %></option>
+            <%  }
+            } %>
+        </select>
+
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date" required>
+
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date" required>
+
+        <button type="submit">Add Course</button>
     </form>
+
+    <% if (request.getAttribute("message") != null) { %>
+        <div class="message"><%= request.getAttribute("message") %></div>
+    <% } %>
+</div>
+
 </body>
 </html>

@@ -41,7 +41,7 @@
                 <td>${foundCourse.courseId}</td>
                 <td>${foundCourse.courseName}</td>
                 <td>${foundCourse.courseDiscription}</td>
-                <td>${foundCourse.instructorName}</td>
+                <td>${foundCourse.instructorId}</td>
                 <td>${foundCourse.startDate}</td>
                 <td>${foundCourse.endDate}</td>
                 <td>

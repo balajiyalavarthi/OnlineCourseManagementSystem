@@ -10,16 +10,14 @@
 <html>
 <head>
     <title>Add New Course</title>
-    
     <style>
         .form-group { margin-bottom: 15px; }
         label { display: inline-block; width: 150px; }
-        input[type="text"], input[type="date"], textarea, input[type="number"] {
+        input[type="text"], input[type="date"], textarea {
             width: 300px; padding: 5px;
         }
         .btn { padding: 5px 15px; }
     </style>
-    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <h2>Add New Course</h2>
@@ -31,10 +29,6 @@
         <div class="form-group">
             <label for="description">Description:</label>
             <textarea id="description" name="description" rows="4" required></textarea>
-        </div>
-        <div class="form-group">
-            <label for="price">Price:</label>
-            <input type="number" id="price" name="price" step="0.01" required>
         </div>
         <div class="form-group">
             <label for="startDate">Start Date:</label>

@@ -14,7 +14,7 @@
 </head>
 <body>
     <h2>Add New Assignment</h2>
-    <form action="addAssignment" method="post">
+    <form action="assignments?action=add" method="post">
         <label>Course ID:</label>
         <input type="number" name="courseId" required><br><br>
 

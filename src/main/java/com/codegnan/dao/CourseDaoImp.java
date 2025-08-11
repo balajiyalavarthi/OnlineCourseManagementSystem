@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.codegnan.DbConnection.DbConnection;
 import com.codegnan.model.Course;
 
@@ -14,16 +13,11 @@ public class CourseDaoImp implements CourseDao {
 
     @Override
     public String addCourse(Course course) throws ClassNotFoundException {
-        // Updated to match database schema - using instructor_id instead of instructor_name
         String sql = "INSERT INTO course (title, description, instructor_id, start_date, end_date) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conn = DbConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            
+        try (PreparedStatement ps = DbConnection.getConnection().prepareStatement(sql)) {
             ps.setString(1, course.getCourseName());
             ps.setString(2, course.getCourseDiscription());
-            // Note: You'll need to modify this to get instructor_id from instructor_name
-            // For now, assuming instructorName contains the instructor_id
-            ps.setInt(3, Integer.parseInt(course.getInstructorName()));
+            ps.setInt(3, course.getInstructorId());  // instructorId from course object
             ps.setDate(4, course.getStartDate());
             ps.setDate(5, course.getEndDate());
 
@@ -39,20 +33,18 @@ public class CourseDaoImp implements CourseDao {
     @Override
     public List<Course> getAllCourses() throws ClassNotFoundException {
         List<Course> courses = new ArrayList<>();
-        String sql = "SELECT c.course_id, c.title as courseName, c.description as courseDiscription, " +
-                     "i.name as instructorName, c.start_date, c.end_date " +
-                     "FROM course c JOIN instructor i ON c.instructor_id = i.instructor_id";
-        
+        String sql = "SELECT course_id, title, description, instructor_id, start_date, end_date FROM course";
+
         try (Connection connection = DbConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
-            
+
             while (rs.next()) {
                 Course course = new Course();
                 course.setCourseId(rs.getInt("course_id"));
-                course.setCourseName(rs.getString("courseName"));
-                course.setCourseDiscription(rs.getString("courseDiscription"));
-                course.setInstructorName(rs.getString("instructorName"));
+                course.setCourseName(rs.getString("title"));
+                course.setCourseDiscription(rs.getString("description"));
+                course.setInstructorId(rs.getInt("instructor_id"));
                 course.setStartDate(rs.getDate("start_date"));
                 course.setEndDate(rs.getDate("end_date"));
                 courses.add(course);
@@ -65,25 +57,23 @@ public class CourseDaoImp implements CourseDao {
 
     @Override
     public Course getByCourseId(int courseId) throws ClassNotFoundException {
-        String sql = "SELECT c.course_id, c.title as courseName, c.description as courseDiscription, "
-                   + "i.name as instructorName, c.start_date, c.end_date "
-                   + "FROM course c JOIN instructor i ON c.instructor_id = i.instructor_id "
-                   + "WHERE c.course_id = ?";
-        
+        String sql = "SELECT course_id, title, description, instructor_id, start_date, end_date FROM course WHERE course_id = ?";
+
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, courseId);
+
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Course c = new Course();
-                    c.setCourseId(rs.getInt("course_id"));
-                    c.setCourseName(rs.getString("courseName"));
-                    c.setCourseDiscription(rs.getString("courseDiscription"));
-                    c.setInstructorName(rs.getString("instructorName"));
-                    c.setStartDate(rs.getDate("start_date"));
-                    c.setEndDate(rs.getDate("end_date"));
-                    return c;
+                    Course course = new Course();
+                    course.setCourseId(rs.getInt("course_id"));
+                    course.setCourseName(rs.getString("title"));
+                    course.setCourseDiscription(rs.getString("description"));
+                    course.setInstructorId(rs.getInt("instructor_id"));
+                    course.setStartDate(rs.getDate("start_date"));
+                    course.setEndDate(rs.getDate("end_date"));
+                    return course;
                 }
             }
 
@@ -95,17 +85,16 @@ public class CourseDaoImp implements CourseDao {
 
     @Override
     public String updateByCourseName(Course updatedCourse) throws ClassNotFoundException {
-        // Updated to use course_id for better performance and accuracy
-        String sql = "UPDATE course SET title=?, description=?, start_date=?, end_date=? WHERE course_id=?";
-        
+        String sql = "UPDATE course SET description=?, instructor_id=?, start_date=?, end_date=? WHERE title=?";
+
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, updatedCourse.getCourseName());
-            ps.setString(2, updatedCourse.getCourseDiscription());
+            ps.setString(1, updatedCourse.getCourseDiscription());
+            ps.setInt(2, updatedCourse.getInstructorId());
             ps.setDate(3, updatedCourse.getStartDate());
             ps.setDate(4, updatedCourse.getEndDate());
-            ps.setInt(5, updatedCourse.getCourseId());
+            ps.setString(5, updatedCourse.getCourseName());
 
             int rows = ps.executeUpdate();
             return rows > 0 ? "success" : "notFound";
@@ -118,8 +107,8 @@ public class CourseDaoImp implements CourseDao {
 
     @Override
     public String deleteByCourseName(String courseName) throws ClassNotFoundException {
-        String sql = "DELETE FROM course WHERE title=?"; // Updated to match schema
-        
+        String sql = "DELETE FROM course WHERE title=?";
+
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -133,30 +122,14 @@ public class CourseDaoImp implements CourseDao {
         }
     }
 
-    // Additional method for admin to delete by course ID
-    public String deleteByCourseId(int courseId) throws ClassNotFoundException {
-        String sql = "DELETE FROM course WHERE course_id=?";
-        
-        try (Connection conn = DbConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, courseId);
-            int rows = ps.executeUpdate();
-            return rows > 0 ? "success" : "notFound";
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return "Database error: " + e.getMessage();
-        }
-    }
-    
+    @Override
     public List<Course> findCoursesByInstructor(int instructorId) throws ClassNotFoundException {
         List<Course> courses = new ArrayList<>();
-        String sql = "SELECT * FROM course WHERE instructor_id = ?";
-        
+        String sql = "SELECT course_id, title, description, instructor_id, start_date, end_date FROM course WHERE instructor_id = ?";
+
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            
+
             ps.setInt(1, instructorId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -164,6 +137,7 @@ public class CourseDaoImp implements CourseDao {
                     course.setCourseId(rs.getInt("course_id"));
                     course.setCourseName(rs.getString("title"));
                     course.setCourseDiscription(rs.getString("description"));
+                    course.setInstructorId(rs.getInt("instructor_id"));
                     course.setStartDate(rs.getDate("start_date"));
                     course.setEndDate(rs.getDate("end_date"));
                     courses.add(course);

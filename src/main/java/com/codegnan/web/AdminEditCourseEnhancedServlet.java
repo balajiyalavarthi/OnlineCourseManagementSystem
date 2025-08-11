@@ -59,7 +59,7 @@ public class AdminEditCourseEnhancedServlet extends HttpServlet {
         course.setCourseId(courseId);
         course.setCourseName(courseName);
         course.setCourseDiscription(courseDescription);
-        course.setInstructorName(String.valueOf(instructorId));
+        course.setInstructorId((instructorId));
         course.setStartDate(startDate);
         course.setEndDate(endDate);
 

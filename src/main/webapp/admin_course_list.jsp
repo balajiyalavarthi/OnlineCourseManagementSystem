@@ -28,11 +28,11 @@
                     <td>${course.courseId}</td>
                     <td>${course.courseName}</td>
                     <td>${course.courseDiscription}</td>
-                    <td>${course.instructorName}</td>
+                    <td>${course.instructorId}</td>
                     <td>${course.startDate}</td>
                     <td>${course.endDate}</td>
                     <td>
-                        <a href="adminEditCourse?id=${course.courseId}">Edit</a> |
+                        <a href="adminEditCourseEnhanced?id=${course.courseId}">Edit</a> |
                         <a href="adminDeleteCourse?courseName=${course.courseName}" 
                            onclick="return confirm('Are you sure you want to delete this course?')">Delete</a>
                     </td>

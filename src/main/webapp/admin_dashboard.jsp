@@ -81,7 +81,7 @@ if (adminId == null) {
     <h3>Course Management</h3>
     <div class="card-container">
         <div class="card"><a href="adminCourseList">View All Courses</a></div>
-        <div class="card"><a href="admin_add_course.jsp">Add New Course</a></div>
+        <div class="card"><a href="admin_add_course_enhanced.jsp">Add New Course</a></div>
         <div class="card"><a href="admin_course_search.jsp">Search Course</a></div>
     </div>
 
