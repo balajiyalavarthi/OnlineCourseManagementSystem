@@ -1,6 +1,6 @@
 # 🎓 Online Course Management System
 
-A comprehensive web-based course management platform built with Java servlets, JSP, and MySQL, featuring role-based access control and assignment submission capabilities.
+A comprehensive web-based course management platform built with Java servlets, JSP, JDBC and MySQL, featuring role-based access control and assignment submission capabilities.
 
 ## 🌟 Features
 
