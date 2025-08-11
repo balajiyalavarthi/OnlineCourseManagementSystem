@@ -49,15 +49,6 @@ h2 {
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<p style="position:absolute; top:15px; right:20px; margin:0;">
-    <a class="logout" href="logout.jsp" 
-       style="display:inline-block; padding:10px 18px; background:linear-gradient(135deg, #667eea, #764ba2); 
-              color:white; font-weight:bold; text-decoration:none; border-radius:8px; 
-              box-shadow:0 4px 10px rgba(0,0,0,0.15); transition:all 0.3s ease; 
-              font-family:'Segoe UI', sans-serif; letter-spacing:0.5px;">
-        Logout
-    </a>
-</p>
 	<h2>Welcome, Instructor!</h2>
 	<p>
 		Email:
@@ -82,7 +73,7 @@ h2 {
 		<li><a href="assignments?action=viewAll">View All Assignments</a></li>
 		<li><a href="add_assignment.jsp">Add New Assignment</a></li>
 		<li><a href="viewSubmissions">View Student Submissions</a></li>
-		
+		<li><a href="logout.jsp">Logout</a></li>
 	</ul>
 </body>
 </html>
