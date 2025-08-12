@@ -85,7 +85,7 @@
           font-family:'Segoe UI', sans-serif;
           letter-spacing:0.5px;
           margin:0;">
-  <a href="studentDashboard" 
+  <a href="student_dashboard.jsp" 
      style="color:rgba(255,255,255,0.85); 
             font-weight:bold; 
             text-decoration:none; 
