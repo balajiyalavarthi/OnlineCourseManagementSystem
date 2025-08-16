@@ -27,8 +27,8 @@
                     <select name="instructorId" required>
                         <c:forEach var="instructor" items="${instructors}">
                             <option value="${instructor.instructor_id}" 
-                                    ${instructor.name == course.instructorId ? 'selected' : ''}>
-                                ${instructor.name} (${instructor.email})
+                                    ${instructor.instructor_id == course.instructorId ? 'selected' : ''}>
+                                ${instructor.instructor_id} (${instructor.email})
                             </option>
                         </c:forEach>
                     </select>

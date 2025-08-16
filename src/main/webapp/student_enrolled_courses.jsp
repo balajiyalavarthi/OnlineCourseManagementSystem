@@ -112,7 +112,7 @@
             <td>${course.courseId}</td>
             <td>${course.courseName}</td>
             <td>${course.courseDiscription}</td>
-            <td>${course.instructorName}</td>
+            <td>${course.instructorId}</td>
             <td><fmt:formatDate value="${course.startDate}" pattern="MMM dd, yyyy"/></td>
             <td><fmt:formatDate value="${course.endDate}" pattern="MMM dd, yyyy"/></td>
         </tr>
